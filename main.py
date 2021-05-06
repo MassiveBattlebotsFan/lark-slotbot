@@ -12,7 +12,16 @@ import os
 from cogs.bal import Bal
 from cogs.bet import Bet
 
-secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
+def mixedCase(*args):
+  total = []
+  import itertools
+  for string in args:
+    a = map(''.join, itertools.product(*((c.upper(), c.lower()) for c in string)))
+    for x in list(a): total.append(x)
+
+  return list(total)
+secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
+#secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
 bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sb!"), help_command=PrettyHelp())
 bot.help_command = PrettyHelp()
@@ -63,14 +72,7 @@ class FakeDB:
             print(f"User {user} does not exist in DB...")
             exit(1)
 
-def mixedCase(*args):
-  total = []
-  import itertools
-  for string in args:
-    a = map(''.join, itertools.product(*((c.upper(), c.lower()) for c in string)))
-    for x in list(a): total.append(x)
 
-  return list(total)
 
 def auth(user):
     if user not in myDB.users.keys():
@@ -130,9 +132,16 @@ async def on_ready():
 @tasks.loop(minutes=5)
 async def stat():
     activity_string = '{} servers.'.format(len(bot.guilds))
-    await bot.wait_until_ready()
+    print('Logged on as', bot.user.name, 'with id', bot.user.id)
     await bot.change_presence(activity=discord.Activity(
         type=discord.ActivityType.watching, name=activity_string))
+    servers = len(bot.guilds)
+    members = 0
+    for guild in bot.guilds:
+        members += guild.member_count - 1
+        await bot.change_presence(activity=discord.Activity(
+            type=discord.ActivityType.watching,
+            name=f'{servers} servers and {members} members'))
 
 
 stat.start()
