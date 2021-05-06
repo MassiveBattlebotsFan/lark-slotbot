@@ -29,6 +29,7 @@ bot.help_command = PrettyHelp()
 bot.add_cog(Bal(bot))
 bot.add_cog(Bet(bot))
 
+
 ending_note = "{ctx.bot.user.name}\nLieutenantLark, 2021"
 
 nav = DefaultMenu(page_left="⬅️", page_right="➡️", remove="🇽")
