@@ -129,7 +129,6 @@ async def on_ready():
 @tasks.loop(minutes=5)
 async def stat():
     activity_string = '{} servers.'.format(len(bot.guilds))
-    print('Logged on as', bot.user.name, 'with id', bot.user.id)
     await bot.change_presence(activity=discord.Activity(
         type=discord.ActivityType.watching, name=activity_string))
     servers = len(bot.guilds)
