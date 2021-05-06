@@ -1,4 +1,3 @@
-from keep_alive import keep_alive
 import discord
 import asyncio
 import time
@@ -246,5 +245,4 @@ async def on_command_error(ctx, error):
      em = discord.Embed(title=randfrolist, description=f"Try again in ``{round(error.retry_after)}``s.", color=0xFF0000)
      await ctx.send(embed=em)
 
-keep_alive()
 bot.run(b64(secret_token).decode())
