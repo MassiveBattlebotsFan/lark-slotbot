@@ -12,6 +12,15 @@ import os
 from cogs.bal import Bal
 from cogs.bet import Bet
 
+
+def mixedCase(*args):
+  total = []
+  import itertools
+  for string in args:
+    a = map(''.join, itertools.product(*((c.upper(), c.lower()) for c in string)))
+    for x in list(a): total.append(x)
+  return list(total)
+
 secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
 bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sb!"), help_command=PrettyHelp())
@@ -62,15 +71,6 @@ class FakeDB:
         except:
             print(f"User {user} does not exist in DB...")
             exit(1)
-
-def mixedCase(*args):
-  total = []
-  import itertools
-  for string in args:
-    a = map(''.join, itertools.product(*((c.upper(), c.lower()) for c in string)))
-    for x in list(a): total.append(x)
-
-  return list(total)
 
 def auth(user):
     if user not in myDB.users.keys():
