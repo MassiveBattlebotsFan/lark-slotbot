@@ -1,11 +1,10 @@
-from keep_alive import keep_alive
 import discord
 import asyncio
 import time
 import random
 from base64 import b64decode as b64
 from discord.ext import tasks, commands
-from pretty_help import PrettyHelp, Navigation
+from pretty_help import PrettyHelp, DefaultMenu
 from random import randrange
 from users import db as users
 import os
@@ -18,8 +17,8 @@ def mixedCase(*args):
   for string in args:
     a = map(''.join, itertools.product(*((c.upper(), c.lower()) for c in string)))
     for x in list(a): total.append(x)
-
   return list(total)
+
 secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
 #secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
@@ -32,7 +31,7 @@ bot.add_cog(Bet(bot))
 
 ending_note = "{ctx.bot.user.name}\nLieutenantLark, 2021"
 
-nav = Navigation("⬅️", "➡️", "🇽")
+nav = DefaultMenu(page_left="⬅️", page_right="➡️", remove="🇽")
 
 color = discord.Color.dark_gold()
 
@@ -71,8 +70,6 @@ class FakeDB:
         except:
             print(f"User {user} does not exist in DB...")
             exit(1)
-
-
 
 def auth(user):
     if user not in myDB.users.keys():
@@ -159,7 +156,7 @@ async def add(ctx, money: int, user: discord.Member):
   elif ctx.author.id not in idlst:
       print(ctx.author.id)
       await ctx.reply("Only papa Lark can use this command.")
-   
+
 
 
 @bot.command(brief='Shows ping',
@@ -255,5 +252,4 @@ async def on_command_error(ctx, error):
      em = discord.Embed(title=randfrolist, description=f"Try again in ``{round(error.retry_after)}``s.", color=0xFF0000)
      await ctx.send(embed=em)
 
-keep_alive()
 bot.run(b64(secret_token).decode())
