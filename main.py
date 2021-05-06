@@ -5,7 +5,7 @@ import time
 import random
 from base64 import b64decode as b64
 from discord.ext import tasks, commands
-from pretty_help import PrettyHelp, Navigation
+from pretty_help import PrettyHelp, DefaultMenu
 from random import randrange
 from users import db as users
 import os
@@ -23,7 +23,7 @@ bot.add_cog(Bet(bot))
 
 ending_note = "{ctx.bot.user.name}\nLieutenantLark, 2021"
 
-nav = Navigation("⬅️", "➡️", "🇽")
+nav = DefaultMenu(page_left="⬅️", page_right="➡️", remove="🇽")
 
 color = discord.Color.dark_gold()
 
@@ -150,7 +150,7 @@ async def add(ctx, money: int, user: discord.Member):
   elif ctx.author.id not in idlst:
       print(ctx.author.id)
       await ctx.reply("Only papa Lark can use this command.")
-   
+
 
 
 @bot.command(brief='Shows ping',
