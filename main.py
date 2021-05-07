@@ -23,7 +23,7 @@ def mixedCase(*args):
 #secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
 secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
-bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sbd!"), help_command=PrettyHelp())
+bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sb!"), help_command=PrettyHelp())
 bot.help_command = PrettyHelp()
 
 #cog loading
