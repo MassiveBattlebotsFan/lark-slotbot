@@ -15,7 +15,7 @@ class Bet(commands.Cog):
           await ctx.send("I need money to gamble!")
           return
         #main.auth(str(ctx.author.id))
-        current_balance = users.get_money(ctx.author.id)
+        current_balance = users.get_money()
         if money > current_balance:
           await ctx.send("You don't have enough money!")
           return
@@ -44,12 +44,12 @@ class Bet(commands.Cog):
             #users[ctx.author.id]["wins"]
             await ctx.reply(
                 f"You Win with {r} to {r2}.")
-            users.add_money(ctx.author.id, round(money + (0.10 * money)))
+            users.add_money(round(money + (0.10 * money)))
         elif (r < r2):
             #user["losses"] += 1
             await ctx.reply(
                 f"You Lose with {r} to {r2}.")
-            users.remove_money(ctx.author.id, money)
+            users.remove_money(money)
         elif (r == r2):
             #user.update('ties')
             await ctx.reply(f"Tie, {r} to {r2}.")
