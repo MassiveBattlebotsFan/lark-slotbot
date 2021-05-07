@@ -3,8 +3,9 @@ import asyncio
 from base64 import b64decode as b64
 from discord.ext import tasks, commands
 from pretty_help import PrettyHelp, DefaultMenu
-from random import randrange
+import random
 
+#cogs
 from cogs.bal import Bal
 from cogs.bet import Bet
 from cogs.add import Add
@@ -18,6 +19,7 @@ def mixedCase(*args):
     for x in list(a): total.append(x)
   return list(total)
 
+#tokens
 secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
 #secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
@@ -36,9 +38,9 @@ nav = DefaultMenu(page_left="⬅️", page_right="➡️", remove="🇽")
 
 color = discord.Color.dark_gold()
 
-l1 = randrange(50, 100)
-l2 = randrange(101, 200)
-l3 = randrange(201, 300)
+l1 = random.randrange(50, 100)
+l2 = random.randrange(101, 200)
+l3 = random.randrange(201, 300)
 
 bot.help_command = PrettyHelp(no_description="E", navigation=nav, color=color, active_time=10, ending_note=ending_note)
 
@@ -107,12 +109,12 @@ async def close(ctx):
 #    embedVar.add_field(name="Win %", value=get_ratio(user.stats), inline=False)
 #    await ctx.send(embed=embedVar)
 
-#@bot.event
-#async def on_command_error(ctx, error):
-#    list1 = ["Slow it down, bro!", "Take a chill pill!", "Im not as fast as I used to be...","What are you doing, speedrunning?", "Creative-Title-Name-Here"]
-#    randfrolist = random.choice(list1)
-#    if isinstance(error, commands.CommandOnCooldown):
-#     em = discord.Embed(title=randfrolist, description=f"Try again in ``{round(error.retry_after)}``s.", color=0xFF0000)
-#     await ctx.send(embed=em)
+@bot.event
+async def on_command_error(ctx, error):
+    list1 = ["Slow it down, bro!", "Take a chill pill!", "Im not as fast as I used to be...","What are you doing, speedrunning?", "Creative-Title-Name-Here"]
+    randfrolist = random.choice(list1)
+    if isinstance(error, commands.CommandOnCooldown):
+     em = discord.Embed(title=randfrolist, description=f"Try again in ``{round(error.retry_after)}``s.", color=0xFF0000)
+     await ctx.send(embed=em)
 
 bot.run(b64(secret_token).decode())
