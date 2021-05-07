@@ -1,7 +1,5 @@
 import discord
 import asyncio
-import time
-import random
 from base64 import b64decode as b64
 from discord.ext import tasks, commands
 from pretty_help import PrettyHelp, DefaultMenu
@@ -114,35 +112,27 @@ async def on_message(message):
 
 @bot.event
 async def on_ready():
-    activity_string = '{} servers.'.format(len(bot.guilds))
-    print('Logged on as', bot.user.name, 'with id', bot.user.id)
-    await bot.change_presence(activity=discord.Activity(
-        type=discord.ActivityType.watching, name=activity_string))
-    servers = len(bot.guilds)
-    members = 0
-    for guild in bot.guilds:
-        members += guild.member_count - 1
-        await bot.change_presence(activity=discord.Activity(
-            type=discord.ActivityType.watching,
-            name=f'{servers} servers and {members} members'))
+  print('Logged on as', bot.user.name, 'with id', bot.user.id)    
+  status_change.start()
 
-@tasks.loop(minutes=5)
-async def stat():
-  print(type(bot))
-  activity_string = '{} servers.'.format(len(bot.guilds))
-  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=activity_string))
+@tasks.loop(seconds=45)
+async def status_change():
+  servers = len(bot.guilds)
+  s = ''
+  if len(bot.guilds) == 1:
+   s = ''
+  elif len(bot.guilds) >=2:
+   s = "s"
+  activity_string = f'{servers} server{s}.'
+  await bot.change_presence(activity=discord.Activity(
+        type=discord.ActivityType.watching, name=activity_string))
   servers = len(bot.guilds)
   members = 0
   for guild in bot.guilds:
-      members += guild.member_count - 1
-      await bot.change_presence(activity=discord.Activity(
-          type=discord.ActivityType.watching,
-          name=f'{servers} servers and {members} members'))
-
-
-
-
-
+    members += guild.member_count - 1
+    await bot.change_presence(activity=discord.Activity(
+            type=discord.ActivityType.watching,
+            name=f'{servers} server{s} and {members} members'))
 
 
 @bot.command(brief='Shows ping',
@@ -217,18 +207,18 @@ async def clear_score(ctx, event):
     setattr(user, event, 0)
     await ctx.channel.send(f"Updated {event} to {getattr(user, event)}")
 
-@bot.command()
-async def wlr(ctx):
-    auth(str(ctx.author.id))
-    user = myDB.get_user(str(ctx.author.id))
-    embedVar = discord.Embed(title="W/L/T",
-                             description="Here's your current stats!",
-                             color=0x00ff00)
-    embedVar.add_field(name="Wins", value=f'{user.wins}', inline=True)
-    embedVar.add_field(name="Losses", value=f'{user.losses}', inline=True)
-    embedVar.add_field(name="Ties", value=f'{user.ties}', inline=True)
-    embedVar.add_field(name="Win %", value=get_ratio(user.stats), inline=False)
-    await ctx.send(embed=embedVar)
+#@bot.command()
+#async def wlr(ctx):
+#    auth(str(ctx.author.id))
+#    user = myDB.get_user(str(ctx.author.id))
+#    embedVar = discord.Embed(title="W/L/T",
+#                             description="Here's your current stats!",
+#                             color=0x00ff00)
+#    embedVar.add_field(name="Wins", value=f'{user.wins}', inline=True)
+#    embedVar.add_field(name="Losses", value=f'{user.losses}', inline=True)
+#    embedVar.add_field(name="Ties", value=f'{user.ties}', inline=True)
+#    embedVar.add_field(name="Win %", value=get_ratio(user.stats), inline=False)
+#    await ctx.send(embed=embedVar)
 
 #@bot.event
 #async def on_command_error(ctx, error):
