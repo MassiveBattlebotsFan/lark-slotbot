@@ -26,9 +26,9 @@ class Add(commands.Cog):
       elif args.len == 1:
         money = args[0]
         users = db(ctx.author.id)
-        
+
         #moderator ID list
-        idlst = [547941645304201247, 576631663904161812]
+        idlst = [547941645304201247, 576631663904161812, 743549337434587327]
 
         if money > 1000000000:
           await ctx.reply("You can't give away that much money at a time!")
