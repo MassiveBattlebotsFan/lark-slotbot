@@ -54,7 +54,7 @@ async def on_ready():
   print('Logged on as', bot.user.name, 'with id', bot.user.id)    
   status_change.start()
 
-@tasks.loop(seconds=45)
+@tasks.loop(minutes=10)
 async def status_change():
   servers = len(bot.guilds)
   s = ''
@@ -68,7 +68,7 @@ async def status_change():
   members = 0
   for guild in bot.guilds:
     members += guild.member_count - 1
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{servers} server{s} and {members} members'))
+  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{servers} server{s} and {members} members'))
 
 @bot.command()
 async def servers(ctx):
