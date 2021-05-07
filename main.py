@@ -8,9 +8,10 @@ from pretty_help import PrettyHelp, DefaultMenu
 from random import randrange
 from users import db as users
 import os
+
 from cogs.bal import Bal
 from cogs.bet import Bet
-
+from cogs.add import Add
 def mixedCase(*args):
   total = []
   import itertools
@@ -22,12 +23,13 @@ def mixedCase(*args):
 #secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
 secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
-bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sb!"), help_command=PrettyHelp())
+bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sbd!"), help_command=PrettyHelp())
 bot.help_command = PrettyHelp()
 
 #cog loading
 bot.add_cog(Bal(bot))
 bot.add_cog(Bet(bot))
+bot.add_cog(Add(bot))
 
 ending_note = "{ctx.bot.user.name}\nLieutenantLark, 2021"
 
@@ -124,38 +126,22 @@ async def on_ready():
             type=discord.ActivityType.watching,
             name=f'{servers} servers and {members} members'))
 
-
-
 @tasks.loop(minutes=5)
 async def stat():
-    activity_string = '{} servers.'.format(len(bot.guilds))
-    print('Logged on as', bot.user.name, 'with id', bot.user.id)
-    await bot.change_presence(activity=discord.Activity(
-        type=discord.ActivityType.watching, name=activity_string))
-    servers = len(bot.guilds)
-    members = 0
-    for guild in bot.guilds:
-        members += guild.member_count - 1
-        await bot.change_presence(activity=discord.Activity(
-            type=discord.ActivityType.watching,
-            name=f'{servers} servers and {members} members'))
+  print(type(bot))
+  activity_string = '{} servers.'.format(len(bot.guilds))
+  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=activity_string))
+  servers = len(bot.guilds)
+  members = 0
+  for guild in bot.guilds:
+      members += guild.member_count - 1
+      await bot.change_presence(activity=discord.Activity(
+          type=discord.ActivityType.watching,
+          name=f'{servers} servers and {members} members'))
 
 
-stat.start()
 
 
-@bot.command()
-async def add(ctx, money: int, user: discord.Member):
-  idlst = [547941645304201247, 576631663904161812]
-  if money > 1000000:
-    await ctx.reply("You can't give youself that much money at a time")
-    return
-  if ctx.author.id in idlst:
-    users.add_money(user, money)
-    await ctx.reply(f"Added {money} to {user}s balance!")
-  elif ctx.author.id not in idlst:
-      print(ctx.author.id)
-      await ctx.reply("Only papa Lark can use this command.")
 
 
 
@@ -244,12 +230,12 @@ async def wlr(ctx):
     embedVar.add_field(name="Win %", value=get_ratio(user.stats), inline=False)
     await ctx.send(embed=embedVar)
 
-@bot.event
-async def on_command_error(ctx, error):
-    list1 = ["Slow it down, bro!", "Take a chill pill!", "Im not as fast as I used to be...","What are you doing, speedrunning?", "Creative-Title-Name-Here"]
-    randfrolist = random.choice(list1)
-    if isinstance(error, commands.CommandOnCooldown):
-     em = discord.Embed(title=randfrolist, description=f"Try again in ``{round(error.retry_after)}``s.", color=0xFF0000)
-     await ctx.send(embed=em)
+#@bot.event
+#async def on_command_error(ctx, error):
+#    list1 = ["Slow it down, bro!", "Take a chill pill!", "Im not as fast as I used to be...","What are you doing, speedrunning?", "Creative-Title-Name-Here"]
+#    randfrolist = random.choice(list1)
+#    if isinstance(error, commands.CommandOnCooldown):
+#     em = discord.Embed(title=randfrolist, description=f"Try again in ``{round(error.retry_after)}``s.", color=0xFF0000)
+#     await ctx.send(embed=em)
 
 bot.run(b64(secret_token).decode())
