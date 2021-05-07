@@ -70,21 +70,6 @@ async def status_change():
     members += guild.member_count - 1
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{servers} server{s} and {members} members'))
 
-@bot.command(brief='Shows ping', description='This command shows the ping of the bot')
-@commands.cooldown(1, 15, commands.BucketType.user)
-async def ping(ctx):
-  color = 0x00FF00
-  ping = round(bot.latency * 1000)
-  if ping >= 1 and bot.latency <= 74:
-    color = 0x00FF00
-  if ping >= 75 and bot.latency <= 124:
-    color = 0xFFA500
-  if ping >= 125:
-    color = 0xFF0000
-  embed = discord.Embed(title="Pong!" , color=color)
-  embed.add_field(name = 'Current Ping:', value = '{:.2f}ms'.format(ping))
-  await ctx.reply(embed = embed)
-
 @bot.command()
 async def servers(ctx):
   message = await ctx.send('Fetching Server Info...')
