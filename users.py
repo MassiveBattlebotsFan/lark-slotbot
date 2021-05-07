@@ -1,13 +1,14 @@
 import json
 import discord
-class db():
-  def __init__(self):
+class db:
+  def __init__(self, user_id: int):
     try:
       with open("users.db", "r") as file:
         self._user_database = json.loads(file.read())
     except:
       with open("users.db", "x") as file:
         file.write(json.dumps({"":""}))
+    self.user_id = user_id
   def db_load(self):
     with open("users.db") as file:
       self._user_database = json.loads(file.read())
@@ -20,40 +21,31 @@ class db():
     except BaseException as error:
       print(f"error: {error}")
 
-  def add_money(self, user_id, money: int):
-    self.db_load()
-    user_id = format(user_id, "d")
-    self._user_database[str(user_id)]["money"] += money
-
+  def add_money(self, money: int):
+    self._user_database[str(self.user_id)]["money"] += money
     self.db_write(self._user_database)
-  def remove_money(self, user_id, money: int):
-    self.db_load()
-    user_id = format(user_id, "d")
-    self._user_database[str(user_id)]["money"] -= money
+
+  def remove_money(self, money: int):
+    self._user_database[str(self.user_id)]["money"] -= money
     self.db_write(self._user_database)
 
 
-  def reset_money(self, user_id):
-    self.db_load()
-    user_id = format(user_id, "d")
-    self._user_database[str(user_id)]["money"] = 1000
+  def reset_money(self):
+    self._user_database[str(self.user_id)]["money"] = 1000
     self.db_write(self._user_database)
 
 
-  def get_money(self, user_id) -> int:
-    self.db_load()
-    user_id = format(user_id, "d")
+  def get_money(self) -> int:
     try:
-      result = self._user_database[str(user_id)]["money"] 
+      result = self._user_database[str(self.user_id)]["money"] 
       return result
     except:
       return "err"
-  def reg_user(self, user_id):
-    self.db_load()
+  def reg_user(self):
     try:
-      self._user_database[str(user_id)] = {"money":1000}
+      self._user_database[str(self.user_id)] = {"money":1000}
       self.db_write(self._user_database)
     except BaseException as error:
       print(f"error in reg_user: {error}")
   def get_user(self, user_id):
-    return self._user_database[str(user_id)]
+    return self._user_database[str(self.user_id)]

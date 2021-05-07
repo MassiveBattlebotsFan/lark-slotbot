@@ -2,13 +2,14 @@ import discord
 from discord.ext import commands
 from random import randrange
 from users import db
-users = db()
+
 class Bet(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
     async def bet(self,ctx, money: int = None):
+      users = db(ctx.author.id)
       try:
         if money <= 0:
           await ctx.send("I need money to gamble!")
