@@ -115,14 +115,15 @@ async def on_ready():
   print('Logged on as', bot.user.name, 'with id', bot.user.id)    
   status_change.start()
 
-@tasks.loop(seconds=5)
+@tasks.loop(seconds=45)
 async def status_change():
+  servers = len(bot.guilds)
   s = ''
   if len(bot.guilds) == 1:
    s = ''
   elif len(bot.guilds) >=2:
    s = "s"
-  activity_string = '{}'+f'server{s}.'.format(len(bot.guilds))
+  activity_string = f'{servers} server{s}.'
   await bot.change_presence(activity=discord.Activity(
         type=discord.ActivityType.watching, name=activity_string))
   servers = len(bot.guilds)
