@@ -4,7 +4,7 @@ from base64 import b64decode as b64
 from discord.ext import tasks, commands
 from pretty_help import PrettyHelp, DefaultMenu
 from random import randrange
-from users import db as users
+from users import db
 import os
 
 from cogs.bal import Bal
@@ -18,8 +18,8 @@ def mixedCase(*args):
     for x in list(a): total.append(x)
   return list(total)
 
-#secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
-secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
+secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
+#secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
 bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sbd!"), help_command=PrettyHelp())
 bot.help_command = PrettyHelp()
