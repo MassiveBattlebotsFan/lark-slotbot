@@ -9,9 +9,20 @@ class db:
       with open("users.db", "x") as file:
         file.write(json.dumps({"":""}))
     self.user_id = user_id
+    if not self.user_exists():
+      self.reg_user()
+  
+  def user_exists(self):
+    self.db_load()
+    if str(self.user_id) not in self._user_database:
+      return False
+    else:
+      return True
+
   def db_load(self):
     with open("users.db") as file:
       self._user_database = json.loads(file.read())
+
   def db_write(self, data):
     try:
       with open("users.db", "w") as file:
