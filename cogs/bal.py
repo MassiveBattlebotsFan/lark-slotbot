@@ -10,17 +10,11 @@ class Bal(commands.Cog):
     
     @commands.command()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    async def bal(self,ctx):
-      user = await self.bot.fetch_user(ctx.author.id)
-      users = db(ctx.author.id)
+    async def bal(self, ctx, user: discord.Member = None):
+      if user == None:
+        user = ctx.author
+      users = db(user.id)
       money = users.get_money()
-      if money == "err":
-        await ctx.send("You are not registered in the DB")
-        users.reg_user()
-      else:
-        embedVar = discord.Embed(title=f"{user}'s Balance", description="", color=0x00ff00)
-        embedVar.add_field(name="You have:", value=f"${money}", inline=False)
-        await ctx.send(embed=embedVar)
-      
-
-
+      embedVar = discord.Embed(title=f"{user}'s Balance", description="", color=0x00ff00)
+      embedVar.add_field(name="You have:", value=f"${money}", inline=False)
+      await ctx.send(embed=embedVar)
