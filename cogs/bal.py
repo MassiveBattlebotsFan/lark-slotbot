@@ -18,6 +18,3 @@ class Bal(commands.Cog):
       embedVar = discord.Embed(title=f"{user}'s Balance", description="", color=0x00ff00)
       embedVar.add_field(name="You have:", value=f"${money}", inline=False)
       await ctx.send(embed=embedVar)
-      
-
-
