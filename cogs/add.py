@@ -8,6 +8,10 @@ class Add(commands.Cog):
       
   @commands.command()
   async def add(self, ctx, money: int, user_ping: discord.Member = None):
+    approved = ['547941645304201247', '743549337434587327']
+    if str(ctx.author.id) not in approved:
+      await ctx.send("only approved users can use add")
+      return
     try:
       if user_ping == None:
         user_id = ctx.author
@@ -18,5 +22,3 @@ class Add(commands.Cog):
       await ctx.send(f'${money} transferred to {user_id}')
     except BaseException as error:
       print(f'Error: {error}')
-      
-
