@@ -48,7 +48,7 @@ bot.help_command = PrettyHelp(no_description="E", navigation=nav, color=color, a
 async def on_message(message):
   for x in message.mentions:
     if (x == bot.user):
-      await message.channel.reply("**My prefix is sb! try using sb!help for further assistance.**")
+      await message.channel.send("My prefix is **sb!**, try using **sb!help** for further assistance.")
   await bot.process_commands(message)
 
 @bot.event
