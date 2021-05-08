@@ -9,7 +9,7 @@ class Ping(commands.Cog):
   @commands.cooldown(1, 15, commands.BucketType.user)
   async def ping(self, ctx):
     color = 0x00FF00
-    ping = round(self.bot.latency * 1000)
+    ping = round(self.bot.latency * 1000, 3)
     if ping >= 1 and ping <= 74:
       color = 0x00FF00
     if ping >= 75 and ping <= 124:

@@ -10,6 +10,7 @@ from cogs.bal import Bal
 from cogs.bet import Bet
 from cogs.add import Add
 from cogs.ping import Ping
+from cogs.sharding import Sharding
 
 def mixedCase(*args):
   total = []
@@ -31,6 +32,7 @@ bot.add_cog(Bal(bot))
 bot.add_cog(Bet(bot))
 bot.add_cog(Add(bot))
 bot.add_cog(Ping(bot))
+bot.add_cog(Sharding(bot))
 
 ending_note = "{ctx.bot.user.name}\nLieutenantLark, 2021"
 
