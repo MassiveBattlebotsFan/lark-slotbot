@@ -10,6 +10,7 @@ from cogs.bal import Bal
 from cogs.bet import Bet
 from cogs.add import Add
 from cogs.ping import Ping
+from cogs.sharding import Sharding
 
 def mixedCase(*args):
   total = []
@@ -23,7 +24,7 @@ def mixedCase(*args):
 #secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
 secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
-bot = commands.Bot(case_insensitive=True,command_prefix=mixedCase("sb!"), help_command=PrettyHelp())
+bot = commands.AutoShardedBot(case_insensitive=True,command_prefix=mixedCase("sb!"), help_command=PrettyHelp())
 bot.help_command = PrettyHelp()
 
 #cog loading
@@ -31,6 +32,7 @@ bot.add_cog(Bal(bot))
 bot.add_cog(Bet(bot))
 bot.add_cog(Add(bot))
 bot.add_cog(Ping(bot))
+bot.add_cog(Sharding(bot))
 
 ending_note = "{ctx.bot.user.name}\nLieutenantLark, 2021"
 
