@@ -20,7 +20,7 @@ class Bet(commands.Cog):
         if money > current_balance:
           await ctx.reply(f"You don't have enough money! \nYou are trying to bet ${money}, and you have ${users.get_money()} remaining. \nCome back to me when you're a little bit... hmm... ***richer***")
           return
-        if current_balance >= 10000000:
+        if current_balance >= 1000000000:
           await ctx.reply("You're too rich to play this game!")
           return
         if money <= 0:

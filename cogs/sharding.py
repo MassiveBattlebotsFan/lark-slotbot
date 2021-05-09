@@ -9,6 +9,7 @@ class Sharding(commands.Cog):
   async def shardinfo(self, ctx):
     approved = ['547941645304201247', '743549337434587327']
     if str(ctx.author.id) not in approved:
+      await ctx.send('You are not an approved moderator of this bot.')
       return
     shards = self.bot.shards
     for i in range(len(shards)):
