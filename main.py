@@ -1,5 +1,4 @@
 import discord
-import asyncio
 from base64 import b64decode as b64
 from discord.ext import tasks, commands
 from pretty_help import PrettyHelp, DefaultMenu
@@ -11,6 +10,8 @@ from cogs.bet import Bet
 from cogs.add import Add
 from cogs.ping import Ping
 from cogs.sharding import Sharding
+from cogs.remove import Remove
+from cogs.close import Close
 
 def mixedCase(*args):
   total = []
@@ -21,10 +22,11 @@ def mixedCase(*args):
   return list(total)
 
 #tokens
-#secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
-secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
+secret_token = "T0RNNU9UVTBNVGc1TnpZMU56QTFOelE0LllKUktUQS5HTjJPSzZNNURSUlVneDQzZ1dHb3MxanA3b1E="
+#secret_token = "T0RNMU5qYzBPREl4TURrME5EQTRNakV6LllJUzQwdy5PTDVpVUo3NEkwbklDZU93TTZqV0JzNVZ5dUU="
 
-bot = commands.AutoShardedBot(case_insensitive=True,command_prefix=mixedCase("sb!"), help_command=PrettyHelp())
+#sharding
+bot = commands.AutoShardedBot(case_insensitive=True,command_prefix=mixedCase("sbd!"), help_command=PrettyHelp())
 bot.help_command = PrettyHelp()
 
 #cog loading
@@ -33,25 +35,13 @@ bot.add_cog(Bet(bot))
 bot.add_cog(Add(bot))
 bot.add_cog(Ping(bot))
 bot.add_cog(Sharding(bot))
+bot.add_cog(Remove(bot))
+bot.add_cog(Close(bot))
 
 ending_note = "{ctx.bot.user.name}\nLieutenantLark, 2021"
-
 nav = DefaultMenu(page_left="⬅️", page_right="➡️", remove="🇽")
-
 color = discord.Color.dark_gold()
-
-l1 = random.randrange(50, 100)
-l2 = random.randrange(101, 200)
-l3 = random.randrange(201, 300)
-
 bot.help_command = PrettyHelp(no_description="E", navigation=nav, color=color, active_time=10, ending_note=ending_note)
-
-@bot.event
-async def on_message(message):
-  for x in message.mentions:
-    if (x == bot.user):
-      await message.channel.send("My prefix is **sb!**, try using **sb!help** for further assistance.")
-  await bot.process_commands(message)
 
 @bot.event
 async def on_ready():
@@ -72,31 +62,9 @@ async def status_change():
   members = 0
   for guild in bot.guilds:
     members += guild.member_count - 1
-  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{servers} server{s} and {members} members'))
+  await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{servers} server{s} and {members - 1} members'))
 
-@bot.command()
-async def servers(ctx):
-  message = await ctx.send('Fetching Server Info...')
-  await asyncio.sleep(2)
-  await message.delete()
-  embed = discord.Embed(title="Server Count")
-  embed.add_field(name=f'{bot.user.name} is used in ', value=f'{len(bot.guilds)} servers.')
-  await ctx.send(embed=embed)
 
-@bot.command()
-async def close(ctx):
-  my_ID = 547941645304201247
-  if (ctx.author.id == my_ID):
-    msg = await ctx.send("Closing")
-    await asyncio.sleep(2)
-    await msg.delete()
-    message = await ctx.send("Bot Offline!")
-    await bot.close()
-    await asyncio.sleep(10)
-    await message.delete()
-  elif (ctx.author.id != my_ID):
-    print(ctx.author.id)
-    await ctx.reply("Only papa Lark can use this command.")
 
 #@bot.command()
 #async def wlr(ctx):
