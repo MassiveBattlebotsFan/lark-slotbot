@@ -8,9 +8,12 @@ class Add(commands.Cog):
       
   @commands.command()
   async def add(self, ctx, money: int, user_ping: discord.Member = None):
-    approved = ['547941645304201247', '743549337434587327']
+    approved = ['547941645304201247', '743549337434587327', '585910898418253829']
     if str(ctx.author.id) not in approved:
       await ctx.send("only approved users can use add")
+      return
+    if money <= 0:
+      await ctx.send('you gotta add an actual amount.')
       return
     try:
       if user_ping == None:
