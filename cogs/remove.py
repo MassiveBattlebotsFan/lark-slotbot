@@ -23,6 +23,6 @@ class Remove(commands.Cog):
         await ctx.reply(f'You cant take away more than the user has! \nThey have {moneya}, and you tried to take away {money}')
       else:
        users.remove_money(money)
-       await ctx.send(f'${money} removed from {user_id}. They now have {moneya - money}')
+       await ctx.send(f'${money} removed from {user_id}. They now have ${moneya - money}')
     except BaseException as error:
       print(f'Error: {error}')

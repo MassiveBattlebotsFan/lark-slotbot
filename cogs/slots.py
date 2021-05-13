@@ -17,8 +17,8 @@ def num2emote(num: int):
 class Blackjack():
   def __init__(self):
     #player and bot
-    self.p_num = randrange(1, 13) + randrange(1, 13) + randrange(1, 13)
-    self.b_num = randrange(1, 13) + randrange(1, 13) + randrange(1, 13)
+    self.p_num = randrange(1, 13) + randrange(1, 13)
+    self.b_num = randrange(1, 13) + randrange(1, 13)
     self.p_over = False
     self.b_over = False
     self.p_win = False
@@ -56,7 +56,8 @@ class Slots(commands.Cog):
     #this is what you can work with, in order as returned by Blackjack.logic():
     #p_num, p_over, p_win, b_num, b_over, b_win, tie
     blackjack = Blackjack()
-
+    #blackjack.logic()
     #your gui output thingy goes here
-    await ctx.send(blackjack.logic())
+    await ctx.send(f'{blackjack.p_num} to { blackjack.b_num} \n{blackjack.logic()}')
+
     

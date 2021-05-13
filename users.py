@@ -35,6 +35,22 @@ class db:
   def add_money(self, money: int):
     self._user_database[str(self.user_id)]["money"] += money
     self.db_write(self._user_database)
+  
+  def add_wins(self):
+    self._user_database[str(self.user_id)]["wins"] += 1
+    self.db_write(self._user_database)
+  
+  def add_loss(self):
+    self._user_database[str(self.user_id)]["losses"] += 1
+    self.db_write(self._user_database)
+
+  def add_tie(self):
+    self._user_database[str(self.user_id)]["ties"] += 1
+    self.db_write(self._user_database)
+
+  def add_game(self):
+    self._user_database[str(self.user_id)]["games"] += 1
+    self.db_write(self._user_database)
 
   def remove_money(self, money: int):
     self._user_database[str(self.user_id)]["money"] -= money
@@ -52,9 +68,37 @@ class db:
       return result
     except:
       return "err"
+
+  def get_wins(self):
+    try:
+      result = self._user_database[str(self.user_id)]["wins"] 
+      return result
+    except:
+      return "err"
+
+  def get_losses(self):
+    try:
+      result = self._user_database[str(self.user_id)]["losses"] 
+      return result
+    except:
+      return "err"
+
+  def get_ties(self):
+    try:
+      result = self._user_database[str(self.user_id)]["ties"] 
+      return result
+    except:
+      return "err"
+
+  def get_games(self):
+    try:
+      result = self._user_database[str(self.user_id)]["games"] 
+      return result
+    except:
+      return "err"
   def reg_user(self):
     try:
-      self._user_database[str(self.user_id)] = {"money":1000}
+      self._user_database[str(self.user_id)] = {"money":1000, "wins":0, "losses":0, "ties":0, "games": 0}
       self.db_write(self._user_database)
     except BaseException as error:
       print(f"error in reg_user: {error}")

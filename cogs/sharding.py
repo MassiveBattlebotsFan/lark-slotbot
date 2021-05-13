@@ -14,3 +14,6 @@ class Sharding(commands.Cog):
     shards = self.bot.shards
     for i in range(len(shards)):
       await ctx.send(f'Shard {i} has latency {round(shards[i].latency * 1000, 3)}ms')
+
+
+        

@@ -8,7 +8,7 @@ class Bet(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    @commands.cooldown(3, 15, commands.BucketType.user)
+    @commands.cooldown(1,0, commands.BucketType.user)
     async def bet(self,ctx, money: int = None):
       users = db(ctx.author.id)
       try:
@@ -32,21 +32,24 @@ class Bet(commands.Cog):
         if money < 100:
           await ctx.send("You can't bet that low!")
           return
-          
+        users.add_game()
         r = randrange(10)
         r2 = randrange(randrange(2), 10)
         if (r > r2):
             #users[ctx.author.id]["wins"]
             users.add_money(round(money + (0.10 * money)))
+            users.add_wins()
             await ctx.reply(
                 f"You Win with {r} to {r2}. You have ${users.get_money()} remaining.")
         elif (r < r2):
             #user["losses"] += 1
             users.remove_money(money)
+            users.add_loss()
             await ctx.reply(
                 f"You Lose with {r} to {r2}. You have ${users.get_money()} remaining.")
         elif (r == r2):
             #user.update('ties')
+            users.add_tie()
             await ctx.reply(f"Tie, {r} to {r2}. You have ${users.get_money()} remaining.")
       except BaseException as error:
         print(f"error: {error}")
